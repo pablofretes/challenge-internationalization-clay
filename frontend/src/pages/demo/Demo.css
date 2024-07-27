@@ -1,0 +1,36 @@
+.demo-container {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.language-selector {
+  margin: 20px;
+  text-align: center;
+}
+
+.language-selector select {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.language-selector select:focus {
+  border-color: #61dafb;
+}
+
+.words-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  padding: 20px;
+}
+
+.word-item {
+  font-family: Arial, sans-serif;
+}
