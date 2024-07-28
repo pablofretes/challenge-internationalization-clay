@@ -5,6 +5,8 @@ services:
       - "3000:3000"
     env_file:
       - ./backend/.env
+    links:
+      - "mongodb"
     volumes:
       - ./backend:/clay-backend
       - /clay-backend/node_modules
@@ -19,3 +21,12 @@ services:
       - ./frontend:/clay-frontend
       - /clay-frontend/node_modules
     command: npm run docker:compose
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - db_data:/data/mongodb
+
+volumes:
+  db_data:
