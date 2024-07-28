@@ -73,7 +73,6 @@ npm run dev
 In production mode, the code will be built and then served:
 
 cd backend
-npm run build
 npm start
 
 ### Frontend
