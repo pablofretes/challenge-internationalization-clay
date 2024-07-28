@@ -5,9 +5,12 @@ const crypto = require('crypto')
 const generateUser = async () => {
   const client = await MongoClient.connect(process.env.MONGO_URI)
   try {
-    const db = client.db('test')
+    const db = client.db(process.env.MONGO_DB_NAME)
     const users = await db.collection('users').find({}).toArray()
-    if (users.length) await db.collection('users').drop()
+    if (users.length) {
+      client.close()
+      return
+    }
 
     const iterations = 1000
     const keyLength = 64
@@ -34,9 +37,13 @@ const generateUser = async () => {
 const generateWords = async () => {
   const client = await MongoClient.connect(process.env.MONGO_URI)
   try {
-    const db = client.db('test')
+    const db = client.db(process.env.MONGO_DB_NAME)
     const words = await db.collection('words').find({}).toArray()
-    if (words.length) await db.collection('words').drop()
+    if (words.length) {
+      client.close()
+      console.log("no words generated because the collection is already populated")
+      return
+    }
     
     const wordsToInsert = [
       {

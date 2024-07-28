@@ -57,6 +57,9 @@ cd project-name
 ### Backend
 
 To start the backend server, you have multiple options.
+But beforehand please remember to setup your .env files
+to contain values that correspond with the env.example
+files in both directories
 
 #### Development Mode
 
