@@ -1,16 +1,14 @@
-import { useState, useEffect, ChangeEvent } from 'react';
+import { useState, ChangeEvent } from 'react';
+import { Translations } from '../../interfaces/translations.interface';
 import './UpdateModal.css';
-import { Word } from '../interfaces/word.interface';
-import { Translations } from '../interfaces/translations.interface';
 
-interface UpdateModalProps {
+interface CreateModalProps {
   show: boolean;
   onClose: () => void;
-  word: Word | null;
-  onSave: (uuid: string, translations: Translations) => void;
+  onSave: (translations: Translations) => void;
 }
 
-const UpdateModal = ({ show, onClose, word, onSave }: UpdateModalProps) => {
+const CreateModal = ({ show, onClose, onSave }: CreateModalProps) => {
   const [translations, setTranslations] = useState<Translations>({
     en: '',
     fr: '',
@@ -18,11 +16,6 @@ const UpdateModal = ({ show, onClose, word, onSave }: UpdateModalProps) => {
     es: '',
   });
 
-  useEffect(() => {
-    if (word) {
-      setTranslations(word.translations);
-    }
-  }, [word]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -32,18 +25,18 @@ const UpdateModal = ({ show, onClose, word, onSave }: UpdateModalProps) => {
     });
   };
 
-  const handleSubmit = () => {
-    if (word) onSave(word.uuid, translations);
-  };
-
   if (!show) {
     return null;
   }
 
+  const handleSubmit = () => {
+    onSave(translations);
+  };
+
   return (
     <div className="modal-overlay">
       <div className="modal">
-        <h2>Update Word</h2>
+        <h2>Create Word</h2>
         <div className="form-group">
           <label>English</label>
           <input
@@ -89,4 +82,4 @@ const UpdateModal = ({ show, onClose, word, onSave }: UpdateModalProps) => {
   );
 };
 
-export default UpdateModal;
+export default CreateModal;

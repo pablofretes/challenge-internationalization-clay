@@ -3,14 +3,14 @@ import { WordEntity } from "../../domain/entities/word.entity";
 import { WordRepository } from "../../domain/word.repository";
 
 export class MockRepositoryImplementation implements WordRepository {
-  private readonly words: WordEntity[] = [] 
+  public words: WordEntity[] = [] 
 
   async findAll(): Promise<WordEntity[] | []> {
     return this.words
   }
 
-  async findWordById(title: string): Promise<WordEntity | null> {
-    const word = this.words.find((u) => u.title === title)
+  async findWordById(uuid: string): Promise<WordEntity | null> {
+    const word = this.words.find((u) => u.uuid === uuid)
     if (!word) return null
     return word
   }
@@ -20,10 +20,11 @@ export class MockRepositoryImplementation implements WordRepository {
     return Promise.resolve(word)
   }
 
-  async updateWord(uuid: string, translations: TranslationEntity): Promise<WordEntity | null> {
+  async updateWord(uuid: string, { translations, defaultLanguage }: { translations?: TranslationEntity, defaultLanguage?: string }): Promise<WordEntity | null> {
     const word = this.words.find((w) => w.uuid === uuid)
     if (!word) return null
-    word.translations = translations
+    if (translations) word.translations = translations
+    if (defaultLanguage) word.defaultLanguage = defaultLanguage
     return Promise.resolve(word)
   }
 

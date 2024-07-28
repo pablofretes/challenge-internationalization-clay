@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect, useState } from "react"
 import { list } from "../../services/words";
 import { Word } from "../../interfaces/word.interface";
-import Navbar from "../../components/Navbar";
+import Navbar from "../../components/shared/Navbar";
 import "./Demo.css"
 
 function Demo() {

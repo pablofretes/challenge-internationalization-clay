@@ -47,33 +47,33 @@ const generateWords = async () => {
     
     const wordsToInsert = [
       {
-        title: "welcome",
         translations: {
           en: "welcome",
           es: "bienvenidos",
           de: "willkommen",
           fr: "bienvenue",
         },
+        defaultLanguage: "en",
         uuid: v4()
       },
       {
-        title: "to",
         translations: {
           en: "to",
           es: "a",
           de: "zu",
           fr: "a",
         },
+        defaultLanguage: "en",
         uuid: v4()
       },
       {
-        title: "clay",
         translations: {
           en: "clay",
           es: "clay",
           de: "clay",
           fr: "clay",
         },
+        defaultLanguage: "en",
         uuid: v4()
       }
     ]

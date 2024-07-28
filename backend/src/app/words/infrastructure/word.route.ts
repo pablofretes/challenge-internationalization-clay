@@ -24,13 +24,12 @@ const middlewares = new Middlewares(tokenRepository)
  *     Word:
  *       type: object
  *       required:
- *         - title
  *         - translations
  *         - _id
  *       properties:
- *         title:
+ *         defaultLanguage:
  *           type: string
- *           description: The title of the word
+ *           description: The language the word is translated to by default
  *         translations:
  *           type: object
  *           properties:
@@ -51,7 +50,6 @@ const middlewares = new Middlewares(tokenRepository)
  *           type: string
  *           description: A unique identifier for the word
  *       example:
- *         title: Hello
  *         translations:
  *           en: Hello
  *           fr: Bonjour
@@ -134,12 +132,8 @@ route.get(
  *           schema:
  *             type: object
  *             required:
- *               - title
  *               - translations
  *             properties:
- *               title:
- *                 type: string
- *                 description: The title of the word
  *               translations:
  *                 type: object
  *                 required:
@@ -157,7 +151,6 @@ route.get(
  *                   es:
  *                     type: string
  *             example:
- *               title: Hello
  *               translations:
  *                 en: Hello
  *                 fr: Bonjour
@@ -176,7 +169,6 @@ route.get(
 route.post(
   `/words`,
   middlewares.verifyToken,
-  body('title').isString().notEmpty().withMessage('Title is required'),
   body('translations.en').isString().notEmpty().withMessage('English translation is required'),
   body('translations.fr').isString().notEmpty().withMessage('French translation is required'),
   body('translations.de').isString().notEmpty().withMessage('German translation is required'),
@@ -218,11 +210,13 @@ route.post(
 route.patch(`/words/:id`,
   middlewares.verifyToken,
   param('id').isUUID().withMessage('Invalid UUID format'),
-  body('title').optional().isString().withMessage('Title must be a string'),
   body('translations.en').optional().isString().withMessage('English translation must be a string'),
   body('translations.fr').optional().isString().withMessage('French translation must be a string'),
   body('translations.de').optional().isString().withMessage('German translation must be a string'),
   body('translations.es').optional().isString().withMessage('Spanish translation must be a string'),
+  body('defaultLanguage').optional()
+    .isString().withMessage('defaultLanguage value must be a string')
+    .isIn(['en', 'es', 'fr', 'de']).withMessage('defaultLanguage value must be one of en, es, fr, de'),
   wordController.update
 )
 

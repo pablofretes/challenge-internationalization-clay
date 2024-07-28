@@ -1,9 +1,9 @@
 import { ChangeEvent, useState } from "react";
-import { Word as WordInterface } from "../interfaces/word.interface"
+import { Word as WordInterface } from "../../interfaces/word.interface"
 import UpdateModal from "./UpdateModal";
-import { Translations } from "../interfaces/translations.interface";
-import { remove, update } from "../services/words";
-import "../pages/words/WordList.css"
+import { Translations } from "../../interfaces/translations.interface";
+import { remove, update } from "../../services/words";
+import "../../pages/words/WordList.css"
 
 function Word ({ word, fetchWords }: { word: WordInterface, fetchWords: () => void }) {
   const [selectedLanguage, setSelectedLanguage] = useState<'en' | 'fr' | 'de' | 'es'>('en');
@@ -26,10 +26,10 @@ function Word ({ word, fetchWords }: { word: WordInterface, fetchWords: () => vo
     setSelectedLanguage(e.target.value as 'en' | 'fr' | 'de' | 'es');
   };
 
-  const handleSave = async (uuid: string, updatedTranslations: Translations) => {
+  const handleSave = async (uuid: string, { translations, defaultLanguage }: { translations: Translations, defaultLanguage: 'en' | 'es' | 'fr' | 'de' }) => {
     try {
-      if (token && uuid && Object.keys(updatedTranslations).length)
-      await update(token, uuid, updatedTranslations);
+      if (token && uuid && Object.keys(translations).length)
+      await update(token, uuid, { translations, defaultLanguage });
       await fetchWords();
       handleCloseModal();
     } catch (error) {

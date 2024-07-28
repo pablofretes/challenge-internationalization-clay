@@ -20,15 +20,16 @@ export class WordUseCases {
     return word
   }
 
-  public createWord = async ({ translations, title }: Omit<WordEntity, "uuid">) => {
-    const wordValue = new WordValue({ translations, title })
+  public createWord = async ({ translations }: Omit<WordEntity, "uuid">) => {
+    const wordValue = new WordValue({ translations })
     const word = await this.wordRepository.createWord(wordValue)
     if (!word) return null
     return word
   }
 
-  public updateWord = async (uuid: string, translations: TranslationEntity) => {
-    const word = await this.wordRepository.updateWord(uuid, translations)
+
+  public updateWord = async (uuid: string, { translations, defaultLanguage }: { translations?: TranslationEntity, defaultLanguage?: string }) => {
+    const word = await this.wordRepository.updateWord(uuid, { translations, defaultLanguage })
     if (!word) return null
     return word
   }

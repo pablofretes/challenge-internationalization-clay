@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './UpdateModal.css';
-import { Translations } from '../interfaces/translations.interface';
-import { create } from '../services/words';
+import { Translations } from '../../interfaces/translations.interface';
+import { create } from '../../services/words';
 import CreateModal from './CreateModal';
 
 interface CreateModalProps {
@@ -15,11 +15,11 @@ const CreateWord = ({ fetchWords }: CreateModalProps) => {
     setShowModal(false);
   };
 
-  const handleSubmit = async (title: string, translations: Translations) => {
+  const handleSubmit = async (translations: Translations) => {
     const token = localStorage.getItem("token")
     try {
-      if (token && title && Object.keys(translations).length) {
-        await create(token, title, translations);
+      if (token && Object.keys(translations).length) {
+        await create(token, { translations });
         await fetchWords();
         handleCloseModal();
       }

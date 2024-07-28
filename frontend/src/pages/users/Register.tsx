@@ -1,13 +1,14 @@
 import { useState, ChangeEvent, FormEvent } from 'react';
 import '../auth/Auth.css';
 import { register } from '../../services/users';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 const Register = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate()
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -22,6 +23,7 @@ const Register = () => {
     e.preventDefault();
     try {
       await register(username, password);
+      navigate("/")
     } catch (err) {
       setError('Registration failed. Please try again.');
     }

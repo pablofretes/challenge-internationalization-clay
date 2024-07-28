@@ -25,6 +25,7 @@ export class WordController {
       return res.status(500).json({ success: false, data: null, message: "internal server error" })
     }
   }
+
   public async get(req: Request, res: Response) {
     const uuid = req.params.uuid
     try {
@@ -63,6 +64,8 @@ export class WordController {
     try {
       const validationRes = this.validationResult(req)
       if (validationRes && !validationRes.isEmpty()) return res.status(400).json({ message: "validation errors", errors: validationRes.array() })
+
+      if (!body?.translations && !body?.defaultLanguage) return res.status(400).json({ success: false, data: null, message: "one of translations or default must exist to update word" })
 
       const word = await this.wordUseCases.updateWord(uuid, body)
       if (!word) return res.status(400).json({ success: false, data: null, message: "word not updated" })

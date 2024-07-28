@@ -4,12 +4,10 @@ import { TranslationEntity } from "./entities/translation.entity";
 
 export class WordValue implements WordEntity {
   uuid: string;
-  title: string;
   translations: TranslationEntity;
 
-  constructor({ translations, title }: Omit<WordEntity, "uuid">) {
+  constructor({ translations }: Omit<WordEntity, "uuid">) {
     this.uuid = uuid();
-    this.title = title
     this.translations = translations
   }
 }

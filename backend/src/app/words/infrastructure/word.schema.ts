@@ -30,11 +30,6 @@ const TranslationSchema = new Schema(
 
 const WordSchema = new Schema(
   {
-    title: {
-      type: String,
-      required: true,
-      lowercase: true
-    },
     translations: {
       type: TranslationSchema,
       required: true
@@ -43,6 +38,11 @@ const WordSchema = new Schema(
       type: String,
       unique: true,
       required: true
+    },
+    defaultLanguage: {
+      type: String,
+      default: 'en',
+      enum: ['en', 'es', 'fr', 'de']
     },
   },
   {

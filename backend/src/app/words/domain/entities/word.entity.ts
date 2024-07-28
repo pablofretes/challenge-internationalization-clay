@@ -1,7 +1,7 @@
 import { TranslationEntity } from "./translation.entity";
 
 export interface WordEntity {
-  title: string;
   uuid: string;
+  defaultLanguage?: string;
   translations: TranslationEntity;
 }

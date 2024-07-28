@@ -34,9 +34,20 @@ export class MongoRepository implements WordRepository {
     }
   }
 
-  async updateWord(uuid: string, translations:TranslationEntity): Promise<WordEntity | null> {
+  async updateWord(uuid: string, { translations, defaultLanguage }: { translations?: TranslationEntity, defaultLanguage?: string }): Promise<WordEntity | null> {
     try {
-      const word = await WordModel.findOneAndUpdate({ uuid }, translations, { new: true })
+      const updateData: { $set?: { translations?: Partial<TranslationEntity>, defaultLanguage?: string } } = {}
+      if (translations && (translations.en || translations.de || translations.fr || translations.es) || defaultLanguage) {
+        updateData.$set = {}
+        updateData.$set.translations = {}
+        if (translations?.en) updateData.$set.translations.en = translations.en
+        if (translations?.es) updateData.$set.translations.es = translations.es
+        if (translations?.fr) updateData.$set.translations.fr = translations.fr
+        if (translations?.de) updateData.$set.translations.de = translations.de
+        if (defaultLanguage) updateData.$set.defaultLanguage = defaultLanguage
+      }
+
+      const word = await WordModel.findOneAndUpdate({ uuid }, updateData, { new: true })
       if (!word) return null
       return word
     } catch (error) {
