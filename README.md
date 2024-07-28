@@ -116,3 +116,7 @@ If you prefer to use Docker, you can start both the backend and the frontend usi
     docker-compose up --build
 
 This command will build the Docker images and start the services. The backend and frontend will be accessible at their respective ports defined in the `docker-compose.yml` file.
+
+If you have been able to run the program you can use this user
+  - username: pablo
+  - password: 123456
