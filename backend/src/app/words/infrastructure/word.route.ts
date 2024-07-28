@@ -91,20 +91,20 @@ route.get(
 
 /**
  * @swagger
- * /words/{title}:
+ * /words/{uuid}:
  *   get:
- *     summary: Get the word by title
+ *     summary: Get the word by uuid
  *     tags: [Words]
  *     parameters:
  *       - in: path
- *         name: title
+ *         name: uuid
  *         schema:
  *           type: string
  *         required: true
- *         description: The word title
+ *         description: The word uuid
  *     responses:
  *       200:
- *         description: The word description by title
+ *         description: The word description by uuid
  *         content:
  *           application/json:
  *             schema:
@@ -186,17 +186,17 @@ route.post(
 
 /**
  * @swagger
- * /words/{_id}:
+ * /words/{uuid}:
  *   patch:
- *     summary: Update the word by the _id
+ *     summary: Update the word by the uuid
  *     tags: [Words]
  *     parameters:
  *       - in: path
- *         name: _id
+ *         name: uuid
  *         schema:
  *           type: string
  *         required: true
- *         description: The word _id
+ *         description: The word uuid
  *     requestBody:
  *       required: true
  *       content:
